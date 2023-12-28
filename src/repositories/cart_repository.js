@@ -1,9 +1,9 @@
-const {Category} = require('../models/index');
+const {Cart} = require('../models/index');
 
-class CategoryRepository {
-    async getCategories() {
+class CartRepository {
+    async getCarts() {
         try {
-            const response = await Category.findAll();
+            const response = await Cart.findAll();
             return response;
         } catch(error) {
             console.log(error);
@@ -11,9 +11,9 @@ class CategoryRepository {
         }
     }
 
-    async getCategory(id) {
+    async getCart(id) {
         try {
-            const response = await Category.findByPk(id);
+            const response = await Cart.findByPk(id);
             return response;
         } catch(error) {
             console.log(error);
@@ -21,13 +21,11 @@ class CategoryRepository {
         }
     }
 
-    async createCategory(name, description) {
+    async createCart(userId) {
         try {
-            const response = await Category.create({
-                name,
-                description
+            const response = await Cart.create({
+                userId
             });
-            console.log("response of create category", response)
             return response;
         } catch(error) {
             console.log(error);
@@ -35,11 +33,11 @@ class CategoryRepository {
         }
     }
 
-    async destroyCategory(categoryId) {
+    async destroyCart(cartId) {
         try {
-            const response = await Category.destroy({
+            const response = await Cart.destroy({
                 where: {
-                    id: categoryId
+                    id: cartId
                 }
             });
             return response;
@@ -52,4 +50,4 @@ class CategoryRepository {
 }
 
 
-module.exports = CategoryRepository;
+module.exports = CartRepository;

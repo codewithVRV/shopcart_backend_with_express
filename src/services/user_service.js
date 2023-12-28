@@ -7,13 +7,15 @@ const UnauthorizedError = require("../errors/unauthorized_error");
 const { generateToken } = require("../utils/auth");
 class UserService {
 
-    constructor(respository) {
+    constructor(respository, cartRepository) {
         this.respository = respository;
+        this.cartRepository = cartRepository;
     }
 
     async createUser(userData) {
         try{
             const response = await this.respository.createUser(userData.email, userData.password);
+            await this.cartRepository.createCart(response.id)
             return response;
         }
         catch(error) {

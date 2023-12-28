@@ -1,11 +1,12 @@
 
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
-const {UserRepository,} = require("../repositories/index")
+const {UserRepository, CartRepository} = require("../repositories/index")
 const UserService = require("../services/user_service");
 const errorResponse = require("../utils/error_response");
 const { NODE_ENV } = require("../config/server_config");
 
-const userService = new UserService(new UserRepository());
+
+const userService = new UserService(new UserRepository(), new CartRepository());
 
 
 async function createUser (req, res) {
