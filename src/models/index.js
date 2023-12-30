@@ -23,7 +23,7 @@ Cart.belongsTo(User, {foreignKey: "userId"})
 // Cart has many products through cart_products
 // Product belongs to many cart through cart_products
 
-Cart.belongsToMany(Product, {through:CartProduct})
+Cart.belongsToMany(Product, {through: CartProduct})
 Product.belongsToMany(Cart, {through: CartProduct})
 
 
