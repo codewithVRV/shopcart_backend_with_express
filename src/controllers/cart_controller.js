@@ -48,9 +48,30 @@ async function getCartProducts(req, res) {
     }
 
 }
+async function clearCart(req, res) {
+
+    try {
+        const response = await cartService.clearCart(req.params.id, req.user.id);
+    
+        return res
+                .status(StatusCodes.OK)
+                .json({
+                    sucess: true,
+                    error: {},
+                    message: "Clear Cart successfully",
+                    data: `Whose product id is :-> ${response}`
+        });
+
+    } catch(error) {
+        console.log("CategoryController Something went wrong", error);
+        return res.status(error.statusCode).json(errorResponse(error.reason, error))
+    }
+
+}
 
 
 
 module.exports = {
-    updateCart, getCartProducts
+    updateCart, getCartProducts,
+    clearCart,
 }

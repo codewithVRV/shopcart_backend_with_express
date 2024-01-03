@@ -50,6 +50,27 @@ class CartService {
             throw new InternalServerError()
         }
     }
+
+    async clearCart(cartId, userId) {
+        try{
+            const cart = await this.respository.getCart(cartId)
+            if(!cart) {
+                throw new NotFoundError("Cart", "id", cartId)
+            }
+            if(cart.userId !== userId){
+                throw new UnauthorizedError("You are not auhorized to do current operation.")
+            }
+            const response = await this.respository.clearCart(cartId)
+            return response;
+        }
+        catch(error){
+            if(error.name === "NotFoundError" || error.name === "UnauthorizedError"){
+                throw error;
+            }
+            console.log(error)
+            throw new InternalServerError()
+        }
+    }
     
     
 }

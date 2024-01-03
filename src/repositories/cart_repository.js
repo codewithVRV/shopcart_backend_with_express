@@ -37,6 +37,21 @@ class CartRepository {
         }
     }
 
+    async clearCart(id) {
+        try{
+            const response = await CartProduct.destroy({
+                where: {
+                    cartId: id
+                }
+            })
+            return response;
+        }
+        catch(error) {
+            console.log(error)
+            throw error;
+        }
+    }
+
     async createCart(userId) {
         try {
             const response = await Cart.create({
