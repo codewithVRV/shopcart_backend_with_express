@@ -11,7 +11,6 @@ class CartService {
     async updateCart(userId, cartId, productId, shouldAddProduct = true){
         try{
             const cart = await this.respository.getCart(cartId)
-            console.log("carts details", cart)
             if(!cart) {
                 throw new NotFoundError("Cart", "id", cartId)
             }
@@ -26,6 +25,28 @@ class CartService {
                 throw error;
             }
             console.log("Category Service:-", error)
+            throw new InternalServerError()
+        }
+    }
+
+
+    async getCartProducts (cartId, userId) {
+        try{
+            const cart = await this.respository.getCart(cartId)
+            if(!cart) {
+                throw new NotFoundError("Cart", "id", cartId)
+            }
+            if(cart.userId !== userId){
+                throw new UnauthorizedError("You are not auhorized to do current operation.")
+            }
+            const response = await this.respository.getCartProducts(cartId)
+            return response;
+        }
+        catch(error) {
+            if(error.name === "NotFoundError" || error.name === "UnauthorizedError"){
+                throw error;
+            }
+            console.log(error)
             throw new InternalServerError()
         }
     }
