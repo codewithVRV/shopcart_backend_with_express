@@ -3,6 +3,8 @@ const Product = require("./product");
 const User = require("./user")
 const Cart = require("./cart")
 const CartProduct = require("./cart_product")
+const Order = require("./order")
+const OrderProduct = require("./order_product")
 
 // https://medium.com/@the_ozmic/how-to-create-many-to-many-relationship-using-sequelize-orm-postgres-on-express-677753a3edb5
 // https://medium.com/@tavilesa12/dealing-with-many-to-many-associations-in-sequelize-bddc34201b80
@@ -27,6 +29,14 @@ Cart.belongsToMany(Product, {through: CartProduct})
 Product.belongsToMany(Cart, {through: CartProduct})
 
 
+Order.belongsTo(User, {foreignKey: "userId"})
+User.hasMany(Order, {foreignKey: "userId"})
+
+
+Order.belongsToMany(Product, {through: OrderProduct})
+Product.belongsToMany(Order, {through: OrderProduct})
+
+
 module.exports = {
-    Category, Product, User, Cart, CartProduct
+    Category, Product, User, Cart, CartProduct, Order, OrderProduct
 }
