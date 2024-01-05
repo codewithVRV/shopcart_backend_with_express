@@ -1,4 +1,4 @@
-const {Order, OrderProduct} = require('../models/index');
+const {Order, OrderProduct, Product} = require('../models/index');
 
 class OrderRepository {
     async getOrders() {
@@ -43,6 +43,30 @@ class OrderRepository {
         }
     }
     
+    async fetchOrderDetails(orderId) {
+        try{
+            const response = await Order.findOne({
+                where : {
+                    id: orderId
+                },
+                include: {
+                    model: Product,
+                    through: {
+                        module: OrderProduct,
+                        attributes: ["quantity"],
+                    },
+                    attributes: ["id", "title", "price", "image"]
+                },
+                attributes: ["id", "status", "createdAt", "updatedAt"],
+                
+            })
+            return response;
+        }
+        catch(error) {
+            console.log(error)
+            throw error;
+        }
+    }
     
 }
 

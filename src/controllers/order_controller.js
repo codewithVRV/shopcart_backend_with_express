@@ -29,9 +29,30 @@ async function createOrder(req, res) {
     }
 
 }
+async function fetchOrderDetails(req, res) {
+
+    try {
+        
+        const response = await orderService.fetchOrderDetails(req.user.id, req.params.id);
+    
+        return res
+                .status(StatusCodes.OK)
+                .json({
+                    sucess: true,
+                    error: {},
+                    message: "fetch order successfully",
+                    data: response
+        });
+
+    } catch(error) {
+        console.log("Order Controller Something went wrong", error);
+        return res.status(error.statusCode).json(errorResponse(error.reason, error))
+    }
+
+}
 
 
 
 module.exports = {
-    createOrder,
+    createOrder, fetchOrderDetails
 }

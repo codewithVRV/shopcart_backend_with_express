@@ -1,5 +1,6 @@
 const InternalServerError = require("../errors/internal_server_error");
 const NotFoundError = require("../errors/not_found_error");
+const UnauthorizedError = require("../errors/unauthorized_error");
 
 class OrderService {
 
@@ -68,7 +69,41 @@ class OrderService {
     }
 
 
+    async fetchOrderDetails (userId, orderId) {
+        try{
+            const orderObject = await this.respository.getOrder(orderId);
+            console.log("orderObject is", orderObject)
+            if(!orderObject){
+                throw new NotFoundError("Order", "orderId", orderId)
+            }
+            if(orderObject.userId != userId) {
+                throw new UnauthorizedError("You are not auhorized to do current operation.")
+            }
+            const response = await this.respository.fetchOrderDetails(orderId)
+            const order = {id: response.id, status: response.status, createdAt: response.createdAt, updatedAt: response.updatedAt}
+            let totalOrderValue = 0;
+            order.products = response.products.map((product) => {
+                totalOrderValue += product.price * product.order_products.quantity
+                return {
+                    id:  product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                    quantity: product.order_products.quantity,
+                }
 
+            })
+            order.totalPrice = totalOrderValue;
+            return order;
+        }
+        catch(error) {
+            if(error.name === "NotFoundError" || error.name === "UnauthorizedError"){
+                throw error;
+            }
+            console.log("Order Service:-", error)
+            throw new InternalServerError()
+        }
+    }
     
 }
 
