@@ -15,6 +15,11 @@ function createCategoryValidator(req, res, next) {
                 .status(StatusCodes.BAD_REQUEST)
                 .json(errorResponse(ReasonPhrases.BAD_REQUEST, new BadRequest("Description")))
     }
+    if(!req.body.image) {
+        return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json(errorResponse(ReasonPhrases.BAD_REQUEST, new BadRequest("Image")))
+    }
 
     
 

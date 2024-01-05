@@ -21,11 +21,11 @@ class CategoryRepository {
         }
     }
 
-    async createCategory(name, description) {
+    async createCategory(name, description, image) {
         try {
             const response = await Category.create({
                 name,
-                description
+                description, image,
             });
             console.log("response of create category", response)
             return response;

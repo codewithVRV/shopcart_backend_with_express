@@ -9,7 +9,7 @@ const ApiRouter = require('./routes/api_router');
 const db = require('./config/db_config');
 const Category = require("./models/category")
 
-
+// const Cart = require("./models/cart")
 
 const app = express();
 
@@ -43,4 +43,8 @@ app.listen(PORT, async () => {
     // console.log(c)
     // const p = await c.getProducts()
     // console.log(p)
+
+    // const c = await Cart.findByPk(3);
+    // const p = await c.getProducts()
+    // console.log(p.length)
 })

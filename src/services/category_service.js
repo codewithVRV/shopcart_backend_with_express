@@ -26,7 +26,7 @@ class CategoryService {
     }
     async createCategory(category) {
         try{
-            const response = await this.respository.createCategory(category.name, category.description);
+            const response = await this.respository.createCategory(category.name, category.description, category.image);
             return response;
         }
         catch(error) {

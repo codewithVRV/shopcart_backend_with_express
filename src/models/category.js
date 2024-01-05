@@ -11,6 +11,10 @@ const Category = db.define('category', {
     description: {
         type: Sequelize.STRING,
         allowNull: false,
+    },
+    image: {
+        type: Sequelize.STRING,
+        allowNull: false, 
     }
 });
 

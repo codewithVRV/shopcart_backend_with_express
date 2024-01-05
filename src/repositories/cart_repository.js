@@ -37,6 +37,21 @@ class CartRepository {
         }
     }
 
+    async getCartByUser (userId) {
+        try{
+            const response = await Cart.findOne({
+                where:{
+                    userId: userId
+                }
+            })
+            return response;
+        }
+        catch(error) {
+            console.log(error)
+            throw error;
+        }
+    }
+
     async clearCart(id) {
         try{
             const response = await CartProduct.destroy({
