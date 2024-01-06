@@ -27,7 +27,6 @@ class CategoryRepository {
                 name,
                 description, image,
             });
-            console.log("response of create category", response)
             return response;
         } catch(error) {
             console.log(error);
