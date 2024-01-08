@@ -1,6 +1,9 @@
 const User = require("../models/user")
 
 class UserRepository {
+    constructor() {
+        console.log("i am overriding the user repository constructor")
+    }
     async getUsers() {
         try {
             const response = await User.findAll();
