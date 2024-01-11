@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const responseTime = require('response-time');
 const cookieParser = require("cookie-parser");
+const cors = require("cors")
 
 const {PORT, DB_ALTER, DB_FORCE} = require('./config/server_config');
 const ApiRouter = require('./routes/api_router');
@@ -19,6 +20,10 @@ const app = express();
 // }));
 app.use(responseTime());
 app.use(cookieParser())
+
+app.use(cors({
+    origin: "http://localhost:5173",
+}))
 
 app.use(bodyParser.json());
 app.use(bodyParser.text());
